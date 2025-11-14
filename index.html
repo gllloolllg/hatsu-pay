@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
@@ -162,6 +162,9 @@
         border-radius: 0 0 10px 10px;
         background: #f7f7f7;
       }
+      #kingaku:focus{
+          outline: none;
+        }
       #bikou {
         box-sizing: border-box;
         width: 80%;
@@ -302,12 +305,14 @@
     document.getElementById('shukkinmode').style.backgroundColor = '#aaa';
     document.getElementById('nyukinmode').style.backgroundColor = '#54bb80';
     document.getElementById('kingaku').style.borderColor = '#54bb80';
+   document.getElementById('kingaku').focus();
   }
   function changeshukkin() {
     changemode = 1;
     document.getElementById('shukkinmode').style.backgroundColor = '#c44545';
     document.getElementById('nyukinmode').style.backgroundColor = '#aaa';
     document.getElementById('kingaku').style.borderColor = '#c44545';
+    document.getElementById('kingaku').focus();
   }
 
   //効果音処理
@@ -333,11 +338,11 @@
       let step = 0;
       let timer = null;
       const TIMEOUT = 1000;
-      document.getElementById('logoimg').addEventListener('click', () => {
+      document.getElementById('logoimg').addEventListener('touchstart', () => {
         step = 1;
         resetTimer();
       });
-      document.getElementById('codeimg').addEventListener('click', () => {
+      document.getElementById('codeimg').addEventListener('touchstart', () => {
         if (step === 1) {
           step = 2;
           resetTimer();
@@ -349,7 +354,7 @@
           reset();
         }
       });
-      document.getElementById('balanceBox').addEventListener('click', () => {
+      document.getElementById('balanceBox').addEventListener('touchstart', () => {
         if (step === 2) {
           openPopup();
           reset();
@@ -375,4 +380,3 @@
 
   </body>
 </html>
-
