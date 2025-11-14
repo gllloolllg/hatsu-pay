@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="icon.png">
+    <title>はつPay</title>
+    <style>
+      html, body {
+        font-family: sans-serif;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        font-family: "Mochiy Pop One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        background: #eee;
+      }
+      .logo {
+        background: #608edb;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 400px;
+      }
+      img {
+        width: 80%;
+      }
+    
+      .card {
+        width: 80%;
+        aspect-ratio: 1.586; /* クレジットカードの比率 */border: 2px solid #ccc; /* 境界線 */
+        border-radius: 12px;     /* 角丸 */
+        margin: 50px auto;       
+        background-image: url("cardback.png");
+        background-size: cover;       /* 画像を div 全体にフィット */
+        background-position: center;  /* 中央に配置 */
+        background-repeat: no-repeat; /* 繰り返しを防ぐ */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* お好みで影も */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+
+        /* background-image: url("back.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center; */
+      }
+      .balance-box {
+        display: flex;
+        align-items: baseline;
+        margin-top: 10%;
+        background-color: white;
+        min-width: 80%;
+      }
+      .balance-row{
+        margin: 0 auto;
+      }
+      #balance {
+        font-size: 4rem;
+        /* display: flex; */
+        font-family: "Rubik", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        text-align: center;
+      }
+      .yen {
+        margin-left: 10px;
+        font-size: 3rem;
+        font-weight: 200;
+      }
+      button {
+        font-size: 18px;
+        padding: 10px 20px;
+      }
+      #popup-wrapper {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999; /* 前面に */
+      }
+
+      /* 背景オーバーレイ */
+      #overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* 透明度で暗くする */
+      }
+      #popup {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        width: 70%;
+        height: 60%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 20px;
+      }
+      .closebtn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: right;
+        vertical-align: top;
+
+        background: transparent;
+        border: none;
+        font-size: 36px;
+        line-height: 1;
+        color: #333;
+        transition: color 0.2s, transform 0.2s;
+      }
+      .mode {
+        box-sizing: border-box;
+        display: flex;
+        width: 80%;
+        margin:40px auto 0;
+        padding: 0;
+      }
+
+      .modebtn {
+        width: 70%;
+        height: 40px;
+        margin:0 auto;
+        padding: 0;
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        font-size: 20px;
+      }
+      #shukkinmode {
+        border-radius: 10px 0 0 0;
+        background-color: #c44545;
+      }
+      #nyukinmode {
+        border-radius: 0 10px 0 0;
+        background-color: #aaa;
+      }
+      #kingaku {
+        box-sizing: border-box;
+        display: flex;
+        width: 80%;
+        padding: 5px;
+        font-size: 35px;
+        margin:0 auto 10%;
+        font-family: "Rubik", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        display: block;
+        border: 4px solid #c44545;
+        border-radius: 0 0 10px 10px;
+        background: #f7f7f7;
+      }
+      #bikou {
+        box-sizing: border-box;
+        width: 80%;
+        font-size: 20px;
+        padding: 8px;
+        margin-bottom: 20px;
+      }
+      .jikkoubtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40%;
+        margin: 0 auto 150px;
+        border: none;
+        border-radius: 10px;
+        background-color: #4c78a8;
+        color: #fff;
+        font-weight: 600;
+        font-size: 20px;
+      }
+      .jikkoubtn:disabled {
+        opacity: 0.5;
+        background: #ccc;
+        color: #666;
+      }
+      a {
+        width: 64%;
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #eee;  /* ボタンの背景色 */
+        color: #777;                /* 文字色 */
+        text-decoration: none;      /* 下線を消す */
+        border-radius: 10px;         /* 角丸 */
+        transition: background-color 0.3s, transform 0.2s;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+      <img src="pay_logo.png" id="logoimg">
+    <div class='card'>
+      <img src="bar.png" style="width:90%;" id="codeimg">
+      <div class="balance-box" id="balanceBox">
+        <div class="balance-row">
+          <span id="balance">_____</span><span class='yen'>円</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="popup-wrapper" style="display:none;">
+      <div id="overlay"></div>
+      <div id="popup">
+        <button onclick="closePopup()" class="closebtn">×</button>
+        <h3 style="font-size:2rem;font-weight: 100;margin:0;padding:0;">残高</h3>
+        <span id="zandaka" style="font-size:3rem">_____</span><span style="font-size:2rem;margin-left:10px;">円</span>
+        <div class="mode">
+          <button id="shukkinmode" class="modebtn" onclick="changeshukkin()">支払い</button>
+          <button id="nyukinmode" class="modebtn" onclick="changenyukin()">入金</button>
+        </div>
+        <input type="number" id="kingaku" placeholder="金額" min="1">
+        <input type="text" id="bikou" placeholder="メモ">
+        <button onclick="jikkou()" class="jikkoubtn">実行</button>
+      </div>
+    </div>
+
+    
+    <!-- 効果音 -->
+    <audio id="se01" src="se/01.mp3" preload="auto"></audio>
+    <audio id="se02" src="se/02.mp3" preload="auto"></audio>
+    <!-- <audio id="se03" src="se/03.mp3" preload="auto"></audio> -->
+
+
+    <script>
+  const API = 'https://script.google.com/macros/s/AKfycbxng8hx3I2JpKVTxoiUZlR3FuZ_4bIi45X4b3LrdLTttp2F691bERKHsi4PvO_j7937/exec';
+
+  // JSONP ヘルパ
+  function jsonp(url) {
+    return new Promise((resolve, reject) => {
+      const cb = 'cb_' + Math.random().toString(36).slice(2);
+      const s = document.createElement('script');
+      const cleanup = () => { delete window[cb]; s.remove(); };
+      window[cb] = (data) => { cleanup(); resolve(data); };
+      s.onerror = (e) => { cleanup(); reject(e); };
+      s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+      document.body.appendChild(s);
+    });
+  }
+
+  // 残高取得
+  async function getBalance() {
+    try {
+      const data = await jsonp(`${API}?action=getBalance`);
+      const b = data && data.balance || 0;
+      document.getElementById('balance').textContent = b;
+      const z = document.getElementById('zandaka'); if (z) z.textContent = b;
+    } catch (e) {
+      alert('残高取得に失敗しました');
+    }
+  }
+
+  // ポップアップ
+  function openPopup(){ document.getElementById('popup-wrapper').style.display='block'; document.getElementById('kingaku').focus(); }
+  function closePopup(){ document.getElementById('popup-wrapper').style.display='none'; }
+
+  // 入出金実行（JSONP なので GET で送る）
+  async function jikkou() {
+    const btns = document.querySelectorAll('button'); btns.forEach(b => b.disabled = true);
+    document.getElementById('balance').textContent = '_____';
+
+    const amount = Number(document.getElementById('kingaku').value);
+    const memo = encodeURIComponent(document.getElementById('bikou').value || '');
+    if (!amount || amount <= 0) {
+      alert('金額を正しく入力してください');
+      btns.forEach(b => b.disabled = false);
+      getBalance(); return;
+    }
+    const action = (changemode === 1) ? 'withdraw' : 'deposit';
+    try {
+      const url = `${API}?action=${action}&amount=${amount}&memo=${memo}`;
+      const data = await jsonp(url);
+      if (!data || data.ok !== true) throw new Error('failed');
+      closePopup();
+      document.getElementById('kingaku').value = '';
+      document.getElementById('bikou').value = '';
+      await getBalance();
+    } catch (e) {
+      alert('処理に失敗しました');
+    } finally {
+      btns.forEach(b => b.disabled = false);
+    }
+  }
+
+  // 入出金モード切替（簡素）
+  let changemode = 1; // 1=出金, 2=入金
+  
+  function changenyukin() {
+    changemode = 2;
+    document.getElementById('shukkinmode').style.backgroundColor = '#aaa';
+    document.getElementById('nyukinmode').style.backgroundColor = '#54bb80';
+    document.getElementById('kingaku').style.borderColor = '#54bb80';
+  }
+  function changeshukkin() {
+    changemode = 1;
+    document.getElementById('shukkinmode').style.backgroundColor = '#c44545';
+    document.getElementById('nyukinmode').style.backgroundColor = '#aaa';
+    document.getElementById('kingaku').style.borderColor = '#c44545';
+  }
+
+  //効果音処理
+  const sounds = [
+    { audio: document.getElementById('se01'), weight: 5, volume:0.5},
+    { audio: document.getElementById('se02'), weight: 1, volume:0.5 },
+    // { audio: document.getElementById('se03'), weight: 1 },
+  ];
+  function RandomSE(list) {
+    const totalWeight = list.reduce((sum, item) => sum + item.weight, 0);
+    let r = Math.random() * totalWeight;
+    for (let i = 0; i < list.length; i++) {
+      r -= list[i].weight;
+      if (r < 0) {
+        return i;
+      }
+    }
+    // まれに誤差でここに来る可能性があるので最後を返す保険
+    return list.length - 1;
+  }
+
+  // 管理モードポップアップ
+      let step = 0;
+      let timer = null;
+      const TIMEOUT = 1000;
+      document.getElementById('logoimg').addEventListener('click', () => {
+        step = 1;
+        resetTimer();
+      });
+      document.getElementById('codeimg').addEventListener('click', () => {
+        if (step === 1) {
+          step = 2;
+          resetTimer();
+        } else {
+          const index = RandomSE(sounds);
+          const sound = sounds[index].audio;
+          sound.currentTime = 0; 
+          sound.play();
+          reset();
+        }
+      });
+      document.getElementById('balanceBox').addEventListener('click', () => {
+        if (step === 2) {
+          openPopup();
+          reset();
+        } else {
+          reset();
+        }
+      });
+      function resetTimer() {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          reset();
+        }, TIMEOUT);
+      }
+      function reset() {
+        step = 0;
+        if (timer) clearTimeout(timer);
+        timer = null;
+      }
+
+  // 起動時
+  getBalance();
+</script>
+
+  </body>
+</html>
