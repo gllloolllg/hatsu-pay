@@ -232,8 +232,8 @@
 
     
     <!-- 効果音 -->
-    <audio id="se01" src="se/01.mp3" preload="auto"></audio>
-    <audio id="se02" src="se/02.mp3" preload="auto"></audio>
+    <!-- <audio id="se01" src="se/01.mp3" preload="auto"></audio>
+    <audio id="se02" src="se/02.mp3" preload="auto"></audio> -->
     <!-- <audio id="se03" src="se/03.mp3" preload="auto"></audio> -->
 
 
@@ -321,6 +321,9 @@
     { audio: document.getElementById('se02'), weight: 1, volume:0.5 },
     // { audio: document.getElementById('se03'), weight: 1 },
   ];
+  let oto;
+  oto = new Audio('se/01.mp3');
+      
   function RandomSE(list) {
     const totalWeight = list.reduce((sum, item) => sum + item.weight, 0);
     let r = Math.random() * totalWeight;
@@ -347,10 +350,11 @@
           step = 2;
           resetTimer();
         } else {
-          const index = RandomSE(sounds);
-          const sound = sounds[index].audio;
-          sound.currentTime = 0; 
-          sound.play();
+          // const index = RandomSE(sounds);
+          // const sound = sounds[index].audio;
+          // sound.currentTime = 0; 
+          // sound.play();
+          oto.play();
           reset();
         }
       });
@@ -380,3 +384,4 @@
 
   </body>
 </html>
+
