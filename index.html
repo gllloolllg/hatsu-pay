@@ -316,13 +316,7 @@
   }
 
   //効果音処理
-  const sounds = [
-    { audio: document.getElementById('se01'), weight: 5, volume:0.5},
-    { audio: document.getElementById('se02'), weight: 1, volume:0.5 },
-    // { audio: document.getElementById('se03'), weight: 1 },
-  ];
-  let oto;
-  oto = new Audio('se/01.mp3');
+  const sound = new Audio("se/01.mp3");
       
   function RandomSE(list) {
     const totalWeight = list.reduce((sum, item) => sum + item.weight, 0);
@@ -354,7 +348,7 @@
           // const sound = sounds[index].audio;
           // sound.currentTime = 0; 
           // sound.play();
-          oto.play();
+          sound.play();
           reset();
         }
       });
@@ -384,4 +378,5 @@
 
   </body>
 </html>
+
 
