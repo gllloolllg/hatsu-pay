@@ -371,7 +371,7 @@ a {
 }
 
 #meisaiTable td{
-  font-size: 10px;
+  font-size: 12px;
   padding: 0px 3px;
   height: 20px;
   border-right: 1px dotted #f28c28;
@@ -385,18 +385,22 @@ a {
 }
 
 /* 列幅（通帳っぽく） */
-#meisaiTable th:nth-child(1){ width:45px; }
-#meisaiTable td:nth-child(1){ width:40px; padding-left: 8px;}
+#meisaiTable th:nth-child(1){ width:58px; }
+#meisaiTable td:nth-child(1){ padding-left: 8px;
+font-variant-numeric: tabular-nums;}
 
 #meisaiTable th:nth-child(2){ width: auto;}
 #meisaiTable td:nth-child(2){ text-align: left; }
 
-#meisaiTable th:nth-child(3){ width:25px; }
-#meisaiTable td:nth-child(3){ text-align: right; }
+#meisaiTable th:nth-child(3){ width:33px; }
+#meisaiTable td:nth-child(3){ text-align: right;
+font-variant-numeric: tabular-nums; }
 
-#meisaiTable th:nth-child(4){ width:25px; }
-#meisaiTable td:nth-child(4){ text-align: right; }
+#meisaiTable th:nth-child(4){ width:33px; }
+#meisaiTable td:nth-child(4){ text-align: right;
+font-variant-numeric: tabular-nums; }
 
 #meisaiTable th:nth-child(5){ width:60px; }
-#meisaiTable td:nth-child(5){ text-align: right; background:#eedbc9; padding-right: 8px;}
+#meisaiTable td:nth-child(5){ text-align: right;
+font-variant-numeric: tabular-nums; background:#eedbc9; padding-right: 8px;}
 
