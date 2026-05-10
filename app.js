@@ -202,7 +202,33 @@ window.jikkou = jikkou;
 let step = 0;
 let timer = null;
 const TIMEOUT = 1000;
-const audio = new Audio("se/01.mp3");
+
+let audioCtx;
+let audioBuffer;
+
+async function initWebAudio() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    const res = await fetch("se/01.mp3");
+    const buf = await res.arrayBuffer();
+    audioBuffer = await audioCtx.decodeAudioData(buf);
+  } catch (e) {
+    console.error(e);
+  }
+}
+initWebAudio();
+
+function playWebAudio() {
+  if (!audioCtx || !audioBuffer) return;
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  const src = audioCtx.createBufferSource();
+  src.buffer = audioBuffer;
+  src.connect(audioCtx.destination);
+  src.start(0);
+}
 
 function resetTimer() {
   if (timer) clearTimeout(timer);
@@ -224,7 +250,7 @@ function setupSecretOpen() {
       step = 2;
       resetTimer();
     } else {
-      audio.play();
+      playWebAudio();
       reset();
     }
   });
@@ -264,6 +290,17 @@ function boot() {
   el.meisaiBtn().addEventListener('click', () => openMeisai());
   el.meisaiClose().addEventListener('click', () => closeMeisai());
 
+  // カードをタップしてフリップ
+  const flipCard = document.getElementById('flipCard');
+  if (flipCard) {
+    flipCard.addEventListener('click', (e) => {
+      // バーコード画像や残高ボックスのタップ時はフリップさせない
+      if (e.target.closest('#codeimg') || e.target.closest('#balanceBox')) {
+        return;
+      }
+      flipCard.classList.toggle('flipped');
+    });
+  }
 
   setupSecretOpen();
 
@@ -347,6 +384,13 @@ function openMeisai() {
   renderMeisaiTable();
   el.meisaiModal().style.display = 'block';
 
+  // CSSのtransitionを効かせるため少し遅らせてクラス追加
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      el.meisaiModal().classList.add('show');
+    });
+  });
+
   // 最新（最下部）を最初に見せる：表示後にスクロール
   setTimeout(() => {
     const w = el.meisaiTableWrap();
@@ -355,7 +399,14 @@ function openMeisai() {
 }
 
 function closeMeisai() {
-  el.meisaiModal().style.display = 'none';
+  el.meisaiModal().classList.remove('show');
+  
+  // アニメーションが終わってからdisplay:noneにする (0.4秒後)
+  setTimeout(() => {
+    if (!el.meisaiModal().classList.contains('show')) {
+      el.meisaiModal().style.display = 'none';
+    }
+  }, 400);
 }
 
 document.addEventListener('DOMContentLoaded', boot);
