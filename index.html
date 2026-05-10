@@ -21,12 +21,17 @@
     <button id="logoutBtn" style="display:none;" aria-label="ログアウト">ログアウト</button>
 
     <img src="pay_logo.png" id="logoimg">
-    <div class='card'>
-      <img src="bar.png" style="width:90%;" id="codeimg">
-      <div class="balance-box" id="balanceBox">
-        <div class="balance-row">
-          <span id="balance">_____</span><span class='yen'>円</span>
+    <div class='card' id="flipCard">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="bar.png" style="width:90%;" id="codeimg">
+          <div class="balance-box" id="balanceBox">
+            <div class="balance-row">
+              <span id="balance">_____</span><span class='yen'>円</span>
+            </div>
+          </div>
         </div>
+        <div class="card-back"></div>
       </div>
     </div>
 
