@@ -1,5 +1,6 @@
 /* ===== ここから下：元の<style>をそのまま移動 ===== */
-html, body {
+html,
+body {
   font-family: sans-serif;
   padding: 0;
   margin: 0;
@@ -9,6 +10,7 @@ html, body {
   font-style: normal;
   background: #eee;
 }
+
 .logo {
   background: #608edb;
   margin: 0;
@@ -16,6 +18,7 @@ html, body {
   width: 100%;
   height: 400px;
 }
+
 img {
   width: 80%;
 }
@@ -34,7 +37,7 @@ img {
   height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 6px 6px 10px rgba(0,0,0,0.6);
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.6);
   border-radius: 12px;
 }
 
@@ -42,7 +45,8 @@ img {
   transform: rotateY(180deg);
 }
 
-.card-front, .card-back {
+.card-front,
+.card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -68,6 +72,7 @@ img {
   background-image: url("cardback.png");
   transform: rotateY(180deg);
 }
+
 .balance-box {
   display: flex;
   align-items: baseline;
@@ -75,9 +80,11 @@ img {
   background-color: white;
   min-width: 80%;
 }
-.balance-row{
+
+.balance-row {
   margin: 0 auto;
 }
+
 #balance {
   font-size: 4rem;
   font-family: "Rubik", sans-serif;
@@ -85,18 +92,22 @@ img {
   font-style: normal;
   text-align: center;
 }
+
 .yen {
   margin-left: 10px;
   font-size: 3rem;
   font-weight: 200;
 }
+
 button {
   font-size: 18px;
   padding: 10px 20px;
 }
+
 #popup-wrapper {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 999;
@@ -105,11 +116,13 @@ button {
 /* 背景オーバーレイ */
 #overlay {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
 }
+
 #popup {
   position: absolute;
   top: 40%;
@@ -122,6 +135,7 @@ button {
   border: 1px solid #ccc;
   padding: 20px;
 }
+
 .closebtn {
   position: absolute;
   top: 0;
@@ -136,39 +150,43 @@ button {
   color: #333;
   transition: color 0.2s, transform 0.2s;
 }
+
 .mode {
   box-sizing: border-box;
   display: flex;
   width: 80%;
-  margin:40px auto 0;
+  margin: 40px auto 0;
   padding: 0;
 }
 
 .modebtn {
   width: 70%;
   height: 40px;
-  margin:0 auto;
+  margin: 0 auto;
   padding: 0;
   border: none;
   color: #fff;
   font-weight: 600;
   font-size: 20px;
 }
+
 #shukkinmode {
   border-radius: 10px 0 0 0;
   background-color: #c44545;
 }
+
 #nyukinmode {
   border-radius: 0 10px 0 0;
   background-color: #aaa;
 }
+
 #kingaku {
   box-sizing: border-box;
   display: flex;
   width: 80%;
   padding: 5px 15px;
   font-size: 35px;
-  margin:0 auto 10%;
+  margin: 0 auto 10%;
   font-family: "Rubik", sans-serif;
   font-optical-sizing: auto;
   text-align: right;
@@ -178,9 +196,11 @@ button {
   border-radius: 0 0 10px 10px;
   background: #f7f7f7;
 }
-#kingaku:focus{
+
+#kingaku:focus {
   outline: none;
 }
+
 #bikou {
   box-sizing: border-box;
   width: 80%;
@@ -188,6 +208,7 @@ button {
   padding: 8px;
   margin-bottom: 20px;
 }
+
 .jikkoubtn {
   display: flex;
   justify-content: center;
@@ -201,11 +222,13 @@ button {
   font-weight: 600;
   font-size: 20px;
 }
+
 .jikkoubtn:disabled {
   opacity: 0.5;
   background: #ccc;
   color: #666;
 }
+
 a {
   width: 64%;
   display: inline-block;
@@ -219,24 +242,25 @@ a {
 }
 
 /* ===== 追加：ログアウトボタン（右上固定） ===== */
-#logoutBtn{
- margin: 10px 10px 10px auto;
- border: none;
- border-radius: 8px;
- padding: 4px 8px;
- font-size: 14px;
- background-color: #aaa;
- color: #fff;
- font-weight: 700;
+#logoutBtn {
+  margin: 10px 10px 10px auto;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+  background-color: #aaa;
+  color: #fff;
+  font-weight: 700;
 }
 
 /* ===== 追加：ログインモーダル ===== */
-#loginModal{
- position: fixed;
- inset: 0;
- z-index: 2000;
+#loginModal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
 }
-#loginOverlay{
+
+#loginOverlay {
   position: absolute;
   inset: 0;
   background: rgb(253, 241, 255);
@@ -245,7 +269,8 @@ a {
   justify-content: center;
   z-index: 0;
 }
-#loginSpinner{
+
+#loginSpinner {
   width: 44px;
   height: 44px;
   border-radius: 999px;
@@ -254,58 +279,64 @@ a {
   animation: loginSpin 0.9s linear infinite;
 }
 
-@keyframes loginSpin{
-  to { transform: rotate(360deg); }
+@keyframes loginSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-#loginPanel{
- position: absolute;
- top: 40%;
- left: 50%;
- transform: translate(-50%, -50%);
- width: 80%;
- max-width: 420px;
- background: #fff;
- border-radius: 12px;
- border: 1px solid #ccc;
- padding: 20px;
- box-sizing: border-box;
+#loginPanel {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-sizing: border-box;
   z-index: 1;
 }
-#loginTitle{
- font-size: 24px;
- margin-bottom: 12px;
+
+#loginTitle {
+  font-size: 24px;
+  margin-bottom: 12px;
 }
-#loginId{
- width: 100%;
- font-size: 20px;
- padding: 10px;
- box-sizing: border-box;
- border: 2px solid #608edb;
- border-radius: 10px;
- outline: none;
- font-family: "Rubik", sans-serif;
+
+#loginId {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 2px solid #608edb;
+  border-radius: 10px;
+  outline: none;
+  font-family: "Rubik", sans-serif;
 }
-#loginMsg{
- margin-top: 10px;
- min-height: 18px;
- font-size: 14px;
- color: #c44545;
+
+#loginMsg {
+  margin-top: 10px;
+  min-height: 18px;
+  font-size: 14px;
+  color: #c44545;
 }
-#loginBtn{
- margin-top: 14px;
- width: 100%;
- height: 44px;
- border: none;
- border-radius: 10px;
- background: #608edb;
- color: #fff;
- font-weight: 700;
- font-size: 18px;
+
+#loginBtn {
+  margin-top: 14px;
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 10px;
+  background: #608edb;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 /* ===== りようめいさいボタン（画面下部固定） ===== */
-#meisaiBtn{
+#meisaiBtn {
   position: fixed;
   left: 50%;
   bottom: 18px;
@@ -320,20 +351,20 @@ a {
   font-weight: 700;
   background: #fff;
   color: #f28c28;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
 
 /* ===== 明細モーダル ===== */
-#meisaiModal{
+#meisaiModal {
   position: fixed;
   inset: 0;
   z-index: 2100;
 }
 
-#meisaiOverlay{
+#meisaiOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -342,7 +373,7 @@ a {
   opacity: 1;
 }
 
-#meisaiPanel{
+#meisaiPanel {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -362,14 +393,14 @@ a {
   transform: translate(-50%, -50%);
 }
 
-.meisaiTitle{
+.meisaiTitle {
   font-size: 20px;
   text-align: center;
   margin: 6px 0;
   color: #f28c28;
 }
 
-.meisaiClose{
+.meisaiClose {
   position: absolute;
   top: -2px;
   right: -4px;
@@ -381,24 +412,32 @@ a {
   padding: 4px 13px;
 }
 
-#meisaiTableWrap{
+#meisaiTableWrap {
   height: calc(100% - 44px);
   width: 100%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: #fffdf7;
+  border-radius: 0 0 14px 14px;
 }
 
 /* ===== 通帳っぽいテーブル ===== */
-#meisaiTable{
+#meisaiTable {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   table-layout: fixed;
   font-family: "Rubik", sans-serif;
   border-top: 1px solid #f28c28;
   border-bottom: 1px solid #f28c28;
 }
 
-#meisaiTable thead th{
+#meisaiTable th,
+#meisaiTable td {
+  box-sizing: border-box;
+}
+
+#meisaiTable thead th {
   position: sticky;
   top: 0;
   color: #f28c28;
@@ -407,13 +446,15 @@ a {
   border-bottom: 2px solid #f28c28;
   border-right: 1px dotted #f28c28;
   padding: 2px 3px;
+  background: #fffdf7;
+  z-index: 10;
 }
 
-#meisaiTable thead th:last-child{
+#meisaiTable thead th:last-child {
   border-right: none;
 }
 
-#meisaiTable td{
+#meisaiTable td {
   font-size: 12px;
   padding: 0px 3px;
   height: 20px;
@@ -423,27 +464,53 @@ a {
   text-overflow: ellipsis;
 }
 
-#meisaiTable td:last-child{
+#meisaiTable td:last-child {
   border-right: none;
 }
 
 /* 列幅（通帳っぽく） */
-#meisaiTable th:nth-child(1){ width:58px; }
-#meisaiTable td:nth-child(1){ padding-left: 8px;
-font-variant-numeric: tabular-nums;}
+#meisaiTable th:nth-child(1) {
+  width: 63px;
+}
 
-#meisaiTable th:nth-child(2){ width: auto;}
-#meisaiTable td:nth-child(2){ text-align: left; }
+#meisaiTable td:nth-child(1) {
+  padding-left: 8px;
+  font-variant-numeric: tabular-nums;
+}
 
-#meisaiTable th:nth-child(3){ width:33px; }
-#meisaiTable td:nth-child(3){ text-align: right;
-font-variant-numeric: tabular-nums; }
+#meisaiTable th:nth-child(2) {
+  width: auto;
+}
 
-#meisaiTable th:nth-child(4){ width:33px; }
-#meisaiTable td:nth-child(4){ text-align: right;
-font-variant-numeric: tabular-nums; }
+#meisaiTable td:nth-child(2) {
+  text-align: left;
+}
 
-#meisaiTable th:nth-child(5){ width:60px; }
-#meisaiTable td:nth-child(5){ text-align: right;
-font-variant-numeric: tabular-nums; background:#eedbc9; padding-right: 8px;}
+#meisaiTable th:nth-child(3) {
+  width: 38px;
+}
 
+#meisaiTable td:nth-child(3) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#meisaiTable th:nth-child(4) {
+  width: 38px;
+}
+
+#meisaiTable td:nth-child(4) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#meisaiTable th:nth-child(5) {
+  width: 60px;
+}
+
+#meisaiTable td:nth-child(5) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  background: #eedbc9;
+  padding-right: 8px;
+}

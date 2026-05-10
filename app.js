@@ -378,6 +378,16 @@ function renderMeisaiTable() {
 
     tbody.appendChild(tr);
   }
+
+  // 空白行を5行追加
+  for (let i = 0; i < 5; i++) {
+    const emptyTr = document.createElement('tr');
+    for (let j = 0; j < 5; j++) {
+      const emptyTd = document.createElement('td');
+      emptyTr.appendChild(emptyTd);
+    }
+    tbody.appendChild(emptyTr);
+  }
 }
 
 function openMeisai() {
