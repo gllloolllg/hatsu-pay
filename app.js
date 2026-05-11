@@ -9,7 +9,7 @@ function jsonp(url) {
   return new Promise((resolve, reject) => {
     const cb = 'cb_' + Math.random().toString(36).slice(2);
     const s = document.createElement('script');
-    const cleanup = () => { try { delete window[cb]; } catch(_) {} s.remove(); };
+    const cleanup = () => { try { delete window[cb]; } catch (_) { } s.remove(); };
     window[cb] = (data) => { cleanup(); resolve(data); };
     s.onerror = (e) => { cleanup(); reject(e); };
     s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
@@ -19,23 +19,23 @@ function jsonp(url) {
 
 // ===== DOM参照 =====
 const el = {
-    loginModal: () => document.getElementById('loginModal'),
-    loginOverlay: () => document.getElementById('loginOverlay'),
-    loginPanel: () => document.getElementById('loginPanel'),
-    loginSpinner: () => document.getElementById('loginSpinner'),
-    loginId: () => document.getElementById('loginId'),
-    loginBtn: () => document.getElementById('loginBtn'),
-    loginMsg: () => document.getElementById('loginMsg'),
-    logoutBtn: () => document.getElementById('logoutBtn'),
-    balance: () => document.getElementById('balance'),
-    zandaka: () => document.getElementById('zandaka'),
-    kingaku: () => document.getElementById('kingaku'),
-    bikou: () => document.getElementById('bikou'),
-    meisaiBtn: () => document.getElementById('meisaiBtn'),
-    meisaiModal: () => document.getElementById('meisaiModal'),
-    meisaiClose: () => document.getElementById('meisaiClose'),
-    meisaiTableWrap: () => document.getElementById('meisaiTableWrap'),
-    meisaiTbody: () => document.getElementById('meisaiTbody'),
+  loginModal: () => document.getElementById('loginModal'),
+  loginOverlay: () => document.getElementById('loginOverlay'),
+  loginPanel: () => document.getElementById('loginPanel'),
+  loginSpinner: () => document.getElementById('loginSpinner'),
+  loginId: () => document.getElementById('loginId'),
+  loginBtn: () => document.getElementById('loginBtn'),
+  loginMsg: () => document.getElementById('loginMsg'),
+  logoutBtn: () => document.getElementById('logoutBtn'),
+  balance: () => document.getElementById('balance'),
+  zandaka: () => document.getElementById('zandaka'),
+  kingaku: () => document.getElementById('kingaku'),
+  bikou: () => document.getElementById('bikou'),
+  meisaiBtn: () => document.getElementById('meisaiBtn'),
+  meisaiModal: () => document.getElementById('meisaiModal'),
+  meisaiClose: () => document.getElementById('meisaiClose'),
+  meisaiTableWrap: () => document.getElementById('meisaiTableWrap'),
+  meisaiTbody: () => document.getElementById('meisaiTbody'),
 
 };
 
@@ -122,12 +122,12 @@ function logout() {
 }
 
 // ===== ポップアップ（元のまま）=====
-function openPopup(){
-  document.getElementById('popup-wrapper').style.display='block';
+function openPopup() {
+  document.getElementById('popup-wrapper').style.display = 'block';
   el.kingaku().focus();
 }
-function closePopup(){
-  document.getElementById('popup-wrapper').style.display='none';
+function closePopup() {
+  document.getElementById('popup-wrapper').style.display = 'none';
 }
 
 // グローバルに残す（HTMLのonclickが参照するため）
@@ -135,7 +135,7 @@ window.openPopup = openPopup;
 window.closePopup = closePopup;
 
 // ===== 入出金モード切替（元のまま）=====
-let changemode = 1; // 1=出金, 2=入金
+let changemode = 2; // 1=出金, 2=入金
 
 function changenyukin() {
   changemode = 2;
@@ -154,28 +154,97 @@ function changeshukkin() {
 window.changenyukin = changenyukin;
 window.changeshukkin = changeshukkin;
 
+// ===== 紙吹雪演出 =====
+function showConfetti() {
+  const emojis = ['🎉', '✨', '🌟', '💰', '💎', '🍀', '🌈', '💩'];
+  const selectedEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+  for (let i = 0; i < 90; i++) {
+    setTimeout(() => {
+      const piece = document.createElement('div');
+      piece.textContent = selectedEmoji;
+      piece.style.position = 'fixed';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.top = '-50px';
+      piece.style.fontSize = 18 + Math.random() * 18 + 'px';
+      piece.style.zIndex = '3000';
+      piece.style.pointerEvents = 'none';
+      piece.style.opacity = '1';
+
+      const duration = 3200 + Math.random() * 1800;
+      const drift = (Math.random() - 0.5) * 160;
+      const rotate = (Math.random() - 0.5) * 360;
+
+      piece.animate(
+        [
+          {
+            transform: 'translate(0, 0) rotate(0deg)',
+            opacity: 1
+          },
+          {
+            transform: `translate(${drift * 0.5}px, ${window.innerHeight * 0.45}px) rotate(${rotate * 0.5}deg)`,
+            opacity: 1
+          },
+          {
+            transform: `translate(${drift}px, ${window.innerHeight + 100}px) rotate(${rotate}deg)`,
+            opacity: 0
+          }
+        ],
+        {
+          duration,
+          easing: 'ease-in-out',
+          fill: 'forwards'
+        }
+      );
+
+      document.body.appendChild(piece);
+
+      setTimeout(() => {
+        piece.remove();
+      }, duration);
+    }, i * 45);
+  }
+}
+function showActionLoading() {
+  el.loginModal().style.display = 'block';
+  el.loginOverlay().style.background = 'transparent';
+  el.loginPanel().style.display = 'none';
+  el.loginSpinner().style.display = 'block';
+}
+
+function hideActionLoading() {
+  el.loginModal().style.display = 'none';
+  el.loginOverlay().style.background = 'rgb(253, 241, 255)';
+  el.loginPanel().style.display = 'block';
+  el.loginSpinner().style.display = 'none';
+}
+
 // ===== 入出金実行（GASがD列残高を計算して書く）=====
 async function jikkou() {
   const btns = document.querySelectorAll('button');
   btns.forEach(b => b.disabled = true);
   el.balance().textContent = '_____';
 
+  showActionLoading();
+
   try {
     if (!currentId) {
       alert('ログインしてください');
-        setAuthUi(false);
+      setAuthUi(false);
       return;
     }
 
     const amount = Number(el.kingaku().value);
     const memo = encodeURIComponent(el.bikou().value || '');
+
     if (!amount || amount <= 0) {
       alert('金額を正しく入力してください');
       renderBalance(calcBalanceFromData(sheetData));
       return;
     }
 
-    const action = (changemode === 1) ? 'withdraw' : 'deposit';
+    const isDeposit = changemode === 2;
+    const action = isDeposit ? 'deposit' : 'withdraw';
     const url = `${API}?action=${action}&id=${encodeURIComponent(currentId)}&amount=${amount}&memo=${memo}`;
     const data = await jsonp(url);
 
@@ -189,10 +258,16 @@ async function jikkou() {
     closePopup();
     el.kingaku().value = '';
     el.bikou().value = '';
+
+    if (isDeposit) {
+      showConfetti();
+    }
+
   } catch (e) {
     alert('処理に失敗しました');
     if (sheetData) renderBalance(calcBalanceFromData(sheetData));
   } finally {
+    hideActionLoading();
     btns.forEach(b => b.disabled = false);
   }
 }
@@ -272,11 +347,11 @@ function boot() {
     if (!id) { el.loginMsg().textContent = 'IDを入力してください'; return; }
 
     el.loginBtn().disabled = true;
-  showLoginLoading();
+    showLoginLoading();
     try {
       await login(id, true);
     } catch (e) {
-  showLoginModal('IDが見つかりませんでした');
+      showLoginModal('IDが見つかりませんでした');
     } finally {
       el.loginBtn().disabled = false;
     }
@@ -306,15 +381,15 @@ function boot() {
 
   // localStorageにIDがあれば自動ログイン検証
   const saved = (localStorage.getItem(LS_KEY) || '').trim();
-    if (saved) {
+  if (saved) {
     showLoginLoading(); // パネルは出さずクルクルから開始
     login(saved, true).catch(() => {
-        localStorage.removeItem(LS_KEY);
-        showLoginModal(''); // 自動ログイン失敗時はパネル表示へ
+      localStorage.removeItem(LS_KEY);
+      showLoginModal(''); // 自動ログイン失敗時はパネル表示へ
     });
-    } else {
+  } else {
     setAuthUi(false); // = パネル表示
-    }
+  }
 
 }
 
@@ -410,7 +485,7 @@ function openMeisai() {
 
 function closeMeisai() {
   el.meisaiModal().classList.remove('show');
-  
+
   // アニメーションが終わってからdisplay:noneにする (0.4秒後)
   setTimeout(() => {
     if (!el.meisaiModal().classList.contains('show')) {
@@ -419,4 +494,5 @@ function closeMeisai() {
   }, 400);
 }
 
+changenyukin();
 document.addEventListener('DOMContentLoaded', boot);
