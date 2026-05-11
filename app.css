@@ -342,16 +342,12 @@ a {
   bottom: 18px;
   transform: translateX(-50%);
   z-index: 1100;
-  width: 70%;
-  max-width: 420px;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 18px;
-  font-weight: 700;
-  background: #fff;
-  color: #f28c28;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+
+  width: 20%;
+  /* 好きなサイズに調整 */
+  height: auto;
+
+  display: block;
 }
 
 /* ===== 明細モーダル ===== */

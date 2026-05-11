@@ -1,99 +1,102 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <meta name="theme-color" content="#eee" />
-    <link rel="apple-touch-icon" href="icon.png">
-    <title>はつPay</title>
 
-    <!-- 外部CSS -->
-    <link rel="stylesheet" href="app.css">
-  </head>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#eee" />
+  <link rel="apple-touch-icon" href="icon.png">
+  <title>はつPay</title>
 
-  <body>
-    <!-- ★追加：ログイン/ログアウト領域（表示領域にも記述） -->
-    
-    <button id="logoutBtn" style="display:none;" aria-label="ログアウト">ログアウト</button>
+  <!-- 外部CSS -->
+  <link rel="stylesheet" href="app.css">
+</head>
 
-    <img src="pay_logo.png" id="logoimg">
-    <div class='card' id="flipCard">
-      <div class="card-inner">
-        <div class="card-front">
-          <img src="bar.png" style="width:90%;" id="codeimg">
-          <div class="balance-box" id="balanceBox">
-            <div class="balance-row">
-              <span id="balance">_____</span><span class='yen'>円</span>
-            </div>
+<body>
+  <!-- ★追加：ログイン/ログアウト領域（表示領域にも記述） -->
+
+  <button id="logoutBtn" style="display:none;" aria-label="ログアウト">ログアウト</button>
+
+  <img src="pay_logo.png" id="logoimg">
+  <div class='card' id="flipCard">
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="bar.png" style="width:90%;" id="codeimg">
+        <div class="balance-box" id="balanceBox">
+          <div class="balance-row">
+            <span id="balance">_____</span><span class='yen'>円</span>
           </div>
         </div>
-        <div class="card-back"></div>
       </div>
+      <div class="card-back"></div>
     </div>
-
-    <div id="popup-wrapper" style="display:none;">
-      <div id="overlay"></div>
-      <div id="popup">
-        <button onclick="closePopup()" class="closebtn">×</button>
-        <h3 style="font-size:2rem;font-weight: 100;margin:0;padding:0;">残高</h3>
-        <span id="zandaka" style="font-size:3rem">_____</span><span style="font-size:2rem;margin-left:10px;">円</span>
-        <div class="mode">
-          <button id="shukkinmode" class="modebtn" onclick="changeshukkin()">支払い</button>
-          <button id="nyukinmode" class="modebtn" onclick="changenyukin()">入金</button>
-        </div>
-        <input type="number" id="kingaku" placeholder="金額" min="1">
-        <input type="text" id="bikou" placeholder="メモ">
-        <button onclick="jikkou()" class="jikkoubtn">実行</button>
-      </div>
-    </div>
-
-     <!-- ログインモーダル -->
-    <div id="loginModal" style="display:none;">
-  <div id="loginOverlay">
-    <div id="loginSpinner" style="display:none;" aria-label="loading" role="status"></div>
   </div>
 
-  <div id="loginPanel">
-    <div id="loginTitle">ログイン</div>
-    <input id="loginId" type="text" placeholder="ID" autocomplete="off" inputmode="text">
-    <div id="loginMsg" aria-live="polite"></div>
-    <button id="loginBtn">ログイン</button>
+  <div id="popup-wrapper" style="display:none;">
+    <div id="overlay"></div>
+    <div id="popup">
+      <button onclick="closePopup()" class="closebtn">×</button>
+      <h3 style="font-size:2rem;font-weight: 100;margin:0;padding:0;">残高</h3>
+      <span id="zandaka" style="font-size:3rem">_____</span><span style="font-size:2rem;margin-left:10px;">円</span>
+      <div class="mode">
+        <button id="shukkinmode" class="modebtn" onclick="changeshukkin()">支払い</button>
+        <button id="nyukinmode" class="modebtn" onclick="changenyukin()">入金</button>
+      </div>
+      <input type="number" id="kingaku" placeholder="金額" min="1">
+      <input type="text" id="bikou" placeholder="メモ">
+      <button onclick="jikkou()" class="jikkoubtn">実行</button>
+    </div>
   </div>
-</div>
 
-<button id="meisaiBtn" style="display:none;">りようめいさい</button>
+  <!-- ログインモーダル -->
+  <div id="loginModal" style="display:none;">
+    <div id="loginOverlay">
+      <div id="loginSpinner" style="display:none;" aria-label="loading" role="status"></div>
+    </div>
+
+    <div id="loginPanel">
+      <div id="loginTitle">ログイン</div>
+      <input id="loginId" type="text" placeholder="ID" autocomplete="off" inputmode="text">
+      <div id="loginMsg" aria-live="polite"></div>
+      <button id="loginBtn">ログイン</button>
+    </div>
+  </div>
+
+  <img id="meisaiBtn" src="passbook.png" style="display:none;" alt="利用明細">
 
   <!-- 明細モーダル -->
-<div id="meisaiModal" style="display:none;">
-  <div id="meisaiOverlay"></div>
+  <div id="meisaiModal" style="display:none;">
+    <div id="meisaiOverlay"></div>
 
-  <div id="meisaiPanel">
-    <button id="meisaiClose" class="meisaiClose" aria-label="閉じる">×</button>
-    <div class="meisaiTitle">りようめいさい</div>
+    <div id="meisaiPanel">
+      <button id="meisaiClose" class="meisaiClose" aria-label="閉じる">×</button>
+      <div class="meisaiTitle">りようめいさい</div>
 
-    <div id="meisaiTableWrap">
-      <table id="meisaiTable">
-        <thead>
-          <tr>
-            <th>日付</th>
-            <th>内容</th>
-            <th>支払</th>
-            <th>入金</th>
-            <th>残高</th>
-          </tr>
-        </thead>
-        <tbody id="meisaiTbody"></tbody>
-      </table>
+      <div id="meisaiTableWrap">
+        <table id="meisaiTable">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>内容</th>
+              <th>支払</th>
+              <th>入金</th>
+              <th>残高</th>
+            </tr>
+          </thead>
+          <tbody id="meisaiTbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
 
 
 
-    <script src="app.js" defer></script>
-  </body>
+  <script src="app.js" defer></script>
+</body>
+
 </html>
